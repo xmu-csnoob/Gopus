@@ -1,9 +1,7 @@
 package util
 
-import "Opus/src/config/mysql"
+import "Opus/src/main/mvc/util/log"
 
 var (
-	MysqlConfigInstance        mysql.Config
-	MysqlClientInstance        MysqlClient
-	ApplicationStarterInstance ApplicationStarter
+	LoggerInstance log.Logger
 )

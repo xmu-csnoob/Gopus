@@ -1,7 +1,9 @@
 package main
 
-import "Opus/src/main/mvc/util"
+import (
+	"Opus/src/main/application"
+)
 
 func main() {
-	util.ApplicationStarterInstance.Initialize()
+	application.StarterInstance.Initialize()
 }

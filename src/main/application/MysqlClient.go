@@ -1,6 +1,7 @@
-package util
+package application
 
 import (
+	"Opus/src/main/mvc/util"
 	"fmt"
 	"github.com/go-ini/ini"
 	"gorm.io/driver/mysql"
@@ -22,7 +23,7 @@ func (mysqlClient *MysqlClient) Initialize() {
 }
 func (mysqlClient *MysqlClient) ReadConfigs() {
 	iniPath := "src/config/mysql/mysql.ini"
-	log.Printf("\033[1;34;40m%s\033[0m\n\n\n", "INFO : 加载数据库配置文件")
+	util.LoggerInstance.PrintInfo("加载数据库配置文件")
 	cfg, err := ini.Load(iniPath)
 	if err != nil {
 		fmt.Println(err)
@@ -41,7 +42,7 @@ func (mysqlClient *MysqlClient) ConnectToDatabase() {
 			SingularTable: true,                         //使用单数表名，启用该选项时，`User` 的表名应该是 `user`而不是users
 		},
 	}
-	log.Printf("\033[1;34;40m%s\033[0m\n\n", "INFO : 连接数据库")
+	util.LoggerInstance.PrintInfo("连接数据库")
 	// 打印SQL设置
 	if MysqlConfigInstance.PrintSqlLog {
 		slowSqlTime, err := time.ParseDuration(MysqlConfigInstance.SlowSqlTime)
