@@ -1,6 +1,7 @@
 package application
 
 import (
+	"Opus/src/main/infrastructure/database"
 	"Opus/src/main/mvc/controller"
 	"Opus/src/main/mvc/util"
 	"github.com/gin-gonic/gin"
@@ -12,7 +13,7 @@ type Starter struct {
 
 func (applicationStarter *Starter) InitDatabase() {
 	util.LoggerInstance.PrintInfo("数据库初始化")
-	MysqlClientInstance.Initialize()
+	database.MysqlClientInstance.Initialize()
 }
 func (applicationStarter *Starter) InitMiddleware() {
 	util.LoggerInstance.PrintInfo("中间件初始化")

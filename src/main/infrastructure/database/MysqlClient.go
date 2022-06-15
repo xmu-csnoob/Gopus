@@ -1,4 +1,4 @@
-package application
+package database
 
 import (
 	"Opus/src/main/mvc/util"
