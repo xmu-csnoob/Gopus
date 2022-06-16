@@ -23,8 +23,6 @@ func (imageController *ImageController) RegisterHttpInterfaces() {
 	util.LoggerInstance.PrintInfo("ImageController:注册Http接口")
 	imageController.engine.GET("/test",
 		func(context *gin.Context) {
-			context.JSON(200, gin.H{
-				"message": "hello gopus",
-			})
+			context.JSON(200, imageController.imageService.GetImageById(52))
 		})
 }

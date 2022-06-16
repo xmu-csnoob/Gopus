@@ -26,7 +26,7 @@ func (mysqlClient *MysqlClient) ReadConfigs() {
 	util.LoggerInstance.PrintInfo("加载数据库配置文件")
 	cfg, err := ini.Load(iniPath)
 	if err != nil {
-		fmt.Println(err)
+		util.LoggerInstance.PrintError(err.Error())
 	}
 	err = cfg.Section("mysql").MapTo(&MysqlConfigInstance)
 }
@@ -47,7 +47,7 @@ func (mysqlClient *MysqlClient) ConnectToDatabase() {
 	if MysqlConfigInstance.PrintSqlLog {
 		slowSqlTime, err := time.ParseDuration(MysqlConfigInstance.SlowSqlTime)
 		if err != nil {
-			fmt.Println(err)
+			util.LoggerInstance.PrintError(err.Error())
 		}
 		loggerNew := logger.New(log.New(os.Stdout, "\r\n", log.LstdFlags), logger.Config{
 			SlowThreshold: slowSqlTime, //慢SQL阈值
@@ -58,12 +58,12 @@ func (mysqlClient *MysqlClient) ConnectToDatabase() {
 		// 建立连接
 		mysqlClient.GormDBClient, err = gorm.Open(mysql.Open(dataSourceName), gormConfig)
 		if err != nil {
-			panic(err)
+			util.LoggerInstance.PrintError(err.Error())
 		}
 		// 设置连接池信息
 		db, err2 := mysqlClient.GormDBClient.DB()
 		if err != nil {
-			panic(err2)
+			util.LoggerInstance.PrintError(err2.Error())
 		}
 		// 设置空闲连接池中连接的最大数量
 		db.SetMaxIdleConns(MysqlConfigInstance.MaxIdleConn)
@@ -72,7 +72,7 @@ func (mysqlClient *MysqlClient) ConnectToDatabase() {
 		// 设置了连接可复用的最大时间
 		duration, err := time.ParseDuration(MysqlConfigInstance.MaxLifeTime)
 		if err != nil {
-			panic(err)
+			util.LoggerInstance.PrintError(err.Error())
 		}
 		db.SetConnMaxLifetime(duration)
 	}

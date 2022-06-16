@@ -22,7 +22,10 @@ func (applicationStarter *Starter) InitHttpInterfaces() {
 	util.LoggerInstance.PrintInfo("HTTP接口初始化")
 	HttpEngine = gin.Default()
 	applicationStarter.ImageControllerInstance.Start(HttpEngine)
-	HttpEngine.Run()
+	err := HttpEngine.Run()
+	if err != nil {
+		util.LoggerInstance.PrintError(err.Error())
+	}
 }
 func (applicationStarter *Starter) Initialize() {
 	util.LoggerInstance.PrintInfo("服务启动中")

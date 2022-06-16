@@ -3,14 +3,13 @@ package mapper
 import (
 	"Opus/src/main/infrastructure/database"
 	"Opus/src/main/mvc/model"
-	"fmt"
 )
 
 type ImageMapper struct {
 }
 
-func (imageMapper *ImageMapper) FindById(id int) {
+func (imageMapper *ImageMapper) FindById(id int) model.Image {
 	image := new(model.Image)
-	database.MysqlClientInstance.GormDBClient.First(&image, 54)
-	fmt.Println(image.Url)
+	database.MysqlClientInstance.GormDBClient.First(&image, id)
+	return *image
 }
